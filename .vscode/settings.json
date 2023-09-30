@@ -1,0 +1,9 @@
+{
+    "emmet.optimizeStylesheetParsing": true,
+    "emmet.preferences": {
+        "javascript" : "javascriptreact"
+    },
+    "emmet.includeLanguages": {
+        "javascript" : "javascriptreact"
+    }
+}
