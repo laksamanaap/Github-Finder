@@ -16,7 +16,8 @@ export const GithubProvider = ({ children }) => {
   const fetchUsers = async () => {
     const response = await fetch(`${GithubURL}/users`, {
       headers: { Authorization: `token ${GithubToken}` },
-    }); // Headers authorization (sometimes the token is missing quicly after generate it)
+    });
+    // Headers authorization (sometimes the token is missing quickly after generate it)
 
     const data = await response.json();
 
