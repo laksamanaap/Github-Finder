@@ -13,6 +13,12 @@ export const GithubProvider = ({ children }) => {
 
   const [state, dispatch] = useReducer(githubReducer, initialValue);
 
+  const clearUsers = () => {
+    dispatch({
+      type: "CLEAR_USERS",
+    });
+  };
+
   const searchUsers = async (text) => {
     const params = new URLSearchParams({
       q: text,
@@ -39,6 +45,7 @@ export const GithubProvider = ({ children }) => {
         users: state.users,
         loading: state.loading,
         searchUsers,
+        clearUsers,
       }}
     >
       {children}
