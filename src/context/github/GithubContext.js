@@ -28,8 +28,6 @@ export const GithubProvider = ({ children }) => {
       payload: data,
     });
 
-    // setLoading(false);
-    // setUsers(data);
   };
 
   return (
