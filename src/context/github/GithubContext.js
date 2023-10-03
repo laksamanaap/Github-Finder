@@ -27,6 +27,8 @@ export const GithubProvider = ({ children }) => {
     const response = await fetch(`${GithubURL}/search/users?${params}`, {
       headers: { Authorization: `token ${GithubToken}` },
     });
+
+    // const response = await fetch(`${GithubURL}/search/users?${params}`);
     // Headers authorization (sometimes the token is missing quickly after generate it)
 
     const { items } = await response.json();
@@ -38,6 +40,9 @@ export const GithubProvider = ({ children }) => {
       payload: items,
     });
   };
+
+  console.log("Users Data :", state.users);
+  // console.log("Dispatch :", dispatch);
 
   return (
     <GithubContext.Provider
