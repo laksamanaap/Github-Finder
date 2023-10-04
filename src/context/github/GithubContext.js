@@ -8,6 +8,7 @@ const GithubToken = process.env.REACT_APP_GITHUB_TOKEN;
 export const GithubProvider = ({ children }) => {
   const initialValue = {
     users: [],
+    user: {},
     loading: true,
   };
 
@@ -48,6 +49,7 @@ export const GithubProvider = ({ children }) => {
     <GithubContext.Provider
       value={{
         users: state.users,
+        user: state.user,
         loading: state.loading,
         searchUsers,
         clearUsers,
