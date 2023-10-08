@@ -69,6 +69,47 @@ export const GithubProvider = ({ children }) => {
         type: "GET_USER",
         payload: data,
       });
+
+      // items.map((item, index) => {
+      //   console.log(item);
+      //   return null;
+      // });
+
+      // dispatch({
+      //   type: "GET_USER",
+      //   payload: items,
+      // });
+    }
+  };
+
+  // Get Repos
+  const getRepos = async (login) => {
+    const params = new URLSearchParams({
+      sort: "created",
+      per_page: 10,
+    });
+
+    const response = await fetch(
+      `${GithubURL}/users/${login}/repos?${params}`,
+      {
+        headers: { Authorization: `token ${GithubToken}` },
+      }
+    );
+
+    if (response.status === 404) {
+      window.location = "/notfound";
+    } else if (response.status === 422) {
+      console.error("Check your endpoint!, Unprocessable content!");
+    } else {
+      const data = await response.json();
+
+      console.log(data);
+
+      dispatch({
+        type: "GET_REPOS",
+        payload: data,
+      });
+
       // items.map((item, index) => {
       //   console.log(item);
       //   return null;
@@ -86,10 +127,12 @@ export const GithubProvider = ({ children }) => {
       value={{
         users: state.users,
         user: state.user,
+        repos: state.repos,
         loading: state.loading,
         searchUsers,
         clearUsers,
         getUser,
+        getRepos,
       }}
     >
       {children}

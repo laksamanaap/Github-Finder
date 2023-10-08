@@ -1,18 +1,20 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { FaCodepen, FaStore, FaUserFriends, FaUsers } from "react-icons/fa";
 import { useEffect, useContext } from "react";
 import GithubContext from "../../context/github/GithubContext";
 import { useParams } from "react-router-dom";
 import Loading from "../layout/Loading";
-import { Link } from "react-router-dom";
-import { FaCodepen, FaStore, FaUserFriends, FaUsers } from "react-icons/fa";
+import RepoList from "../repos/RepoList";
 
 function User() {
-  const { getUser, user, loading } = useContext(GithubContext);
+  const { getUser, getRepos, repos, user, loading } = useContext(GithubContext);
 
   const params = useParams();
 
   useEffect(() => {
     getUser(params.login);
+    getRepos(params.login);
   }, []);
 
   const {
@@ -54,7 +56,13 @@ function User() {
                     <img src={avatar_url} alt="" />
                   </figure>
                   <div className="card-body justify-end">
-                    <h2 className="card-title mb-0">{name}</h2>
+                    <h2 className="card-title mb-0">
+                      {name === "undefined" ? (
+                        <div>{login}</div>
+                      ) : (
+                        <div>{name}</div>
+                      )}
+                    </h2>
                     <p className="flex-grow-0">{login}</p>
                   </div>
                 </div>
@@ -62,13 +70,17 @@ function User() {
               <div className="col-span-2">
                 <div className="mb-6">
                   <h1 className="text-3xl card-title">
-                    {name}
+                    {name === "undefined" ? (
+                      <div>{login}</div>
+                    ) : (
+                      <div>{name}</div>
+                    )}
                     <div className="ml-2 mr-1 badge badge-success">{type}</div>
                     {hireable && (
                       <div className="mx-1 badge badge-info">Hireable</div>
                     )}
                   </h1>
-                  <p>{bio}</p>
+                  <p>{bio && <div>{bio}</div>}</p>
                   <div className="mt-4 card-actions">
                     <a
                       href={html_url}
@@ -92,11 +104,7 @@ function User() {
                     <div className="stat">
                       <div className="stat-title text-md">Website</div>
                       <div className="text-lg stat-value">
-                        <a
-                          href={`https//${blog}`}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
+                        <a href={blog} target="_blank" rel="noreferrer">
                           {blog}
                         </a>
                       </div>
@@ -105,7 +113,7 @@ function User() {
                 </div>
               </div>
             </div>
-            <div className="w-full py-5 mb-6 rounded-lg shadow-md bg-base-100 stats">
+            <div className="w-full py-5 mb-8 rounded-lg shadow-md bg-base-100 stats">
               <div className="stat">
                 <div className="stat-figure">
                   <FaUsers className="text-3xl md:text-5xl" />
@@ -144,7 +152,7 @@ function User() {
               </div>
             </div>
 
-            {/* <RepoList repos={repos} /> */}
+            <RepoList repos={repos} />
           </div>
         </>
       </div>
