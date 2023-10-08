@@ -9,6 +9,7 @@ export const GithubProvider = ({ children }) => {
   const initialValue = {
     users: [],
     user: {},
+    repos: [],
     loading: true,
   };
 
@@ -44,11 +45,13 @@ export const GithubProvider = ({ children }) => {
 
   // Get Single User
   const getUser = async (login) => {
-    const params = new URLSearchParams({
-      q: login,
-    });
+    // const response = await fetch(`${GithubURL}/search/users/${login}`, {
+    //   // Try to change with another endpoint (422 Unproccessable content). Solved!
+    //   headers: { Authorization: `token ${GithubToken}` },
+    // });
 
-    const response = await fetch(`${GithubURL}/search/users?${params}`, {
+    const response = await fetch(`${GithubURL}/users/${login}`, {
+      // (Getting Single User)
       // Try to change with another endpoint (422 Unproccessable content). Solved!
       headers: { Authorization: `token ${GithubToken}` },
     });
@@ -58,28 +61,25 @@ export const GithubProvider = ({ children }) => {
     } else if (response.status === 422) {
       console.error("Check your endpoint!, Unprocessable content!");
     } else {
-      const { items } = await response.json();
+      const data = await response.json();
 
-      items.map((item, index) => {
-        dispatch({
-          type: "GET_USER",
-          payload: item,
-        });
-        return null;
+      console.log(data);
+
+      dispatch({
+        type: "GET_USER",
+        payload: data,
       });
+      // items.map((item, index) => {
+      //   console.log(item);
+      //   return null;
+      // });
 
       // dispatch({
       //   type: "GET_USER",
       //   payload: items,
       // });
     }
-
-    // const response = await fetch(`${GithubURL}/search/users?${params}`);
-    // Headers authorization (sometimes the token is missing quickly after generate it)
   };
-
-  // console.log("Users Data :", state.users);
-  // console.log("Dispatch :", dispatch);
 
   return (
     <GithubContext.Provider
