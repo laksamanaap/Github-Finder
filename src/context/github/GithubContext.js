@@ -44,18 +44,24 @@ export const GithubProvider = ({ children }) => {
 
   // Get Single User
   const getUser = async (login) => {
-    const response = await fetch(`${GithubURL}/search/users?${login}`, {
+    const params = new URLSearchParams({
+      q: login,
+    });
+
+    const response = await fetch(`${GithubURL}/search/users?${params}`, {
       headers: { Authorization: `token ${GithubToken}` },
     });
 
     if (response.status === 404) {
       window.location = "/notfound";
     } else {
-      const data = await response.json();
+      const { items } = await response.json();
+
+      console.log("Single User Data : ", items);
 
       dispatch({
         type: "GET_USER",
-        payload: data,
+        payload: items,
       });
     }
 
@@ -63,7 +69,7 @@ export const GithubProvider = ({ children }) => {
     // Headers authorization (sometimes the token is missing quickly after generate it)
   };
 
-  console.log("Users Data :", state.users);
+  // console.log("Users Data :", state.users);
   // console.log("Dispatch :", dispatch);
 
   return (
