@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
+import propTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 function UserItems({ user: { login, avatar_url, type } }) {
@@ -43,8 +43,8 @@ function UserItems({ user: { login, avatar_url, type } }) {
   );
 }
 
-UserItems.PropTypes = {
-  user: PropTypes.object.isRequired,
+UserItems.propTypes = {
+  user: propTypes.object.isRequired,
 };
 
 export default UserItems;
