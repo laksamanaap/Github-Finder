@@ -49,20 +49,29 @@ export const GithubProvider = ({ children }) => {
     });
 
     const response = await fetch(`${GithubURL}/search/users?${params}`, {
+      // Try to change with another endpoint (422 Unproccessable content). Solved!
       headers: { Authorization: `token ${GithubToken}` },
     });
 
     if (response.status === 404) {
       window.location = "/notfound";
+    } else if (response.status === 422) {
+      console.error("Check your endpoint!, Unprocessable content!");
     } else {
       const { items } = await response.json();
 
-      console.log("Single User Data : ", items);
-
-      dispatch({
-        type: "GET_USER",
-        payload: items,
+      items.map((item, index) => {
+        dispatch({
+          type: "GET_USER",
+          payload: item,
+        });
+        return null;
       });
+
+      // dispatch({
+      //   type: "GET_USER",
+      //   payload: items,
+      // });
     }
 
     // const response = await fetch(`${GithubURL}/search/users?${params}`);
