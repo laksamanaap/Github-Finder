@@ -1,5 +1,5 @@
 import React from "react";
-import { PropTypes } from "prop-types";
+import propTypes  from "prop-types";
 import RepoItem from "./RepoItem";
 
 function RepoList({ repos }) {
@@ -19,8 +19,8 @@ function RepoList({ repos }) {
   );
 }
 
-RepoList.PropTypes = {
-  repos: PropTypes.array.isRequired,
+RepoList.propTypes = {
+  repos: propTypes.array.isRequired,
 };
 
 export default RepoList;
