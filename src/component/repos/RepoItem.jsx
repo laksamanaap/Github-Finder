@@ -1,5 +1,5 @@
 import { FaEye, FaInfo, FaLink, FaStar, FaUtensils } from "react-icons/fa";
-import PropTypes from "prop-types";
+import propTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 function RepoItem({ repo }) {
@@ -42,7 +42,7 @@ function RepoItem({ repo }) {
 }
 
 RepoItem.propTypes = {
-  repo: PropTypes.object.isRequired,
+  repo: propTypes.object.isRequired,
 };
 
 export default RepoItem;
